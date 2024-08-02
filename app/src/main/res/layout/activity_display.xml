@@ -248,12 +248,10 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:layout_gravity="start"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -264,16 +262,42 @@
                         android:textStyle="bold"
                         android:padding="6dp" />
 
-
                     <Spinner
                         android:id="@+id/floor_spinner"
-                        android:layout_width="00dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/edit_text_rounded_corner"
                         android:padding="3dp"
                         android:paddingStart="0dp" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Additional Details: "
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:paddingTop="12dp" />
+
+                    <EditText
+                        android:id="@+id/additional_details_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Enter additional details"
+                        android:textSize="16sp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="12dp"
+                        android:background="@null" />
+                </LinearLayout>
+
 
             </LinearLayout>
 
