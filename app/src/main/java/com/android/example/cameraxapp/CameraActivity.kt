@@ -30,38 +30,33 @@ import kotlin.math.max
 import kotlin.math.min
 
 class CameraActivity : AppCompatActivity() {
-    private var selectedDocument: String? = null
-    private var selectedCountry: String? = null
-    private lateinit var selectedDocumentText: TextView
     private lateinit var viewBinding: ActivityCameraBinding
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
+    private lateinit var selectedDocumentText: TextView
     private lateinit var imageView: ImageView
-
+    private var selectedDocument: String? = null
+    private var selectedCountry: String? = null
+    private var vehicleCategory: String? = null
+    private var vehicleType: String? = null
+    private var extractedNumberPlate: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-
-//          Set the top bar Items
-        var topBar = findViewById<TopBar>(R.id.top_bar)
-
+        // Set the top bar Items
+        val topBar = findViewById<TopBar>(R.id.top_bar)
         topBar.setTitle("Scan Document")
-        topBar.setBackIconClickListener { view: View? -> finish() }
-        topBar.setMenuIconClickListener { view: View? ->
+        topBar.setBackIconClickListener { finish() }
+        topBar.setMenuIconClickListener {
             Toast.makeText(this, "Menu Icon clicked", Toast.LENGTH_SHORT).show()
         }
-
-
-//        Set the bottom bar items
-//        bottomBar = findViewById<BottomBar>(R.id.bottom_bar)
 
         // Initialize the views
         selectedDocumentText = findViewById(R.id.selected_document_text)
         imageView = findViewById(R.id.imageView)
-
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -70,21 +65,27 @@ class CameraActivity : AppCompatActivity() {
             requestPermissions()
         }
 
-        // Retrieve the selected document type and country name from intent
-        val selectedDocument = intent.getStringExtra("selectedDocument")
-        val selectedCountry = intent.getStringExtra("selectedCountry")
-        this.selectedDocument = selectedDocument
-        this.selectedCountry = selectedCountry
+        // Retrieve and display the selected document type, country name, vehicle category, and number plate
+        selectedDocument = intent.getStringExtra("selectedDocument")
+        selectedCountry = intent.getStringExtra("selectedCountry")
+        vehicleCategory = intent.getStringExtra("vehicleCategory")
+        vehicleType = intent.getStringExtra("vehicleType")
+        extractedNumberPlate = intent.getStringExtra("numberPlate")
 
-
-        // Display the selected document type and country name
-        selectedDocumentText.text = "Selected Document: $selectedDocument\nSelected Country: $selectedCountry"
+        selectedDocumentText.text = """
+            Selected Document: $selectedDocument
+            Selected Country: $selectedCountry
+            Vehicle Category: $vehicleCategory
+            Vehicle Type: $vehicleType
+            Number Plate: $extractedNumberPlate
+        """.trimIndent()
 
         // Set up the listener for the image capture button
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
+
 
     private fun takePhoto() {
         Log.d(TAG, "takePhoto() called")

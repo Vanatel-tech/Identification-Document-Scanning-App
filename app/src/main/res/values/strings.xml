@@ -21,4 +21,15 @@
 
     <string name="sidar_image_description">Description of the image</string>
 
+
+    <string-array name="vehicle_categories">
+        <item>Bike</item>
+        <item>Motorbike</item>
+        <item>Car</item>
+        <item>Truck</item>
+    </string-array>
 </resources>
+
+
+
+

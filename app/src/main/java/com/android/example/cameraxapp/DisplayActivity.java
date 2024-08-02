@@ -54,7 +54,7 @@ public class DisplayActivity extends AppCompatActivity {
         topBar = findViewById(R.id.top_bar);
         topBar.setTitle("Visitor Details");
         topBar.setBackIconClickListener(view -> {
-            intent.set(new Intent(DisplayActivity.this, SelectDocumentActivity.class));
+            intent.set(new Intent(DisplayActivity.this, SelectDocumentActivityKt.class));
             startActivity(intent.get());
             finish();
         });
@@ -110,7 +110,7 @@ public class DisplayActivity extends AppCompatActivity {
                         } else if ("Driving License".equals(documentType)) {
                             Toast.makeText(DisplayActivity.this, "Selected Doc is DL ", Toast.LENGTH_SHORT).show();
                         } else {
-                            intent.set(new Intent(DisplayActivity.this, SelectDocumentActivity.class));
+                            intent.set(new Intent(DisplayActivity.this, SelectDocumentActivityKt.class));
                             startActivity(intent.get());
                             finish();
                         }
@@ -162,13 +162,13 @@ public class DisplayActivity extends AppCompatActivity {
 
 //        Button listeners
         buttonBack.setOnClickListener(view -> {
-            intent.set(new Intent(DisplayActivity.this, SelectDocumentActivity.class));
+            intent.set(new Intent(DisplayActivity.this, SelectDocumentActivityKt.class));
             startActivity(intent.get());
             finish();
         });
 
         iconBack.setOnClickListener(view -> {
-            intent.set(new Intent(DisplayActivity.this, SelectDocumentActivity.class));
+            intent.set(new Intent(DisplayActivity.this, SelectDocumentActivityKt.class));
             startActivity(intent.get());
             finish();
         });
@@ -178,19 +178,70 @@ public class DisplayActivity extends AppCompatActivity {
         });
     }
 
-    private void getIDCardDetails(String[] lines) {
-        // Extract details from lines and set to views
-        // For example:
-        textNameView.setText("Extracted Name"); // Use extracted value
-        textDocNoView.setText("Extracted ID Number"); // Use extracted value
+
+    @SuppressLint("SetTextI18n")
+    private void getPassportDetails(String[] text) {
+//        Get Passport name
+        String nameField = text[text.length - 2].substring(5); //Get second last line
+        String[] nameArr = nameField.split("<");
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < nameArr.length; i++) {
+            if (nameArr[i].length() > 2) {
+                sb.append(nameArr[i]).append(" ");
+            }
+            if (i == 3) {
+                break;
+            }
+        }
+
+        textNameView.setText(sb.toString().trim());
+        sb.setLength(0);
+
+        // Get the Passport number from the last Line
+        String passNoField = text[text.length - 1].substring(0,8);
+        textDocNoView.setText(passNoField);
+
+//        Toast.makeText(DisplayActivity.this, "Finished", Toast.LENGTH_SHORT).show();
     }
 
-    private void getPassportDetails(String[] lines) {
-        // Extract details from lines and set to views
-        // For example:
-        textNameView.setText("Extracted Name"); // Use extracted value
-        textDocNoView.setText("Extracted Passport Number"); // Use extracted value
+    @SuppressLint("SetTextI18n")
+    private void getIDCardDetails(String[] lines) {
+//        Get ID Card name
+        String nameField = lines[lines.length - 1]; //Get last line
+        String[] nameArr = nameField.split("<");
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < nameArr.length; i++) {
+            if (nameArr[i].length() > 2) {
+                sb.append(nameArr[i]).append(" ");
+            }
+            if (i == 3) {
+                break;
+            }
+        }
+        textNameView.setText(sb.toString().trim()); // Last line in the scan
+        sb.setLength(0);
+
+//        Get ID Card Number
+        String iDNoLine = lines[lines.length - 2];
+        String reversedText = reverseString(iDNoLine);
+        String reversedIdNo = reversedText.substring(4, 13);
+        String dummyIdNo = reverseString(reversedIdNo);
+
+        // Check if dummyIdNo starts with '0' or 'O' or 'o'
+        if (dummyIdNo.startsWith("0") || dummyIdNo.startsWith("O") || dummyIdNo.startsWith("o")) {
+            // Discard the first character
+            textDocNoView.setText(dummyIdNo.substring(1));
+        } else{
+            textDocNoView.setText(dummyIdNo);
+        }
     }
+
+    public static String reverseString(String text) {
+        return new StringBuilder(text).reverse().toString();
+    }
+
 
     private void saveData() {
         progressBar.setVisibility(View.VISIBLE);

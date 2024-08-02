@@ -50,7 +50,7 @@
             android:name=".DisplayActivity"
             android:exported="false" />
         <activity
-            android:name=".SelectDocumentActivity"
+            android:name=".SelectDocumentActivityKt"
             android:exported="false" />
         <activity
             android:name=".WelcomeActivity"

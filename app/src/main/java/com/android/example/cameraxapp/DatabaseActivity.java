@@ -33,7 +33,7 @@ public class DatabaseActivity extends AppCompatActivity {
         userContainer = findViewById(R.id.user_container);
 
         Button addUserButton = findViewById(R.id.add_user_button);
-        addUserButton.setOnClickListener(v -> startActivity(new Intent(this, SelectDocumentActivity.class))); // Redirect to SelectDocumentActivity
+        addUserButton.setOnClickListener(v -> startActivity(new Intent(this, SelectDocumentActivityKt.class))); // Redirect to SelectDocumentActivity
 
         Button viewDatabaseButton = findViewById(R.id.view_database_button);
         viewDatabaseButton.setOnClickListener(v -> viewDatabaseEntries()); // View database entries
