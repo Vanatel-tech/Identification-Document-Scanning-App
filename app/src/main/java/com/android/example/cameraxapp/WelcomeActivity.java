@@ -2,12 +2,9 @@ package com.android.example.cameraxapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -36,7 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         button_register = findViewById(R.id.button_register);
         button_register.setOnClickListener(view -> {
-            Intent i = new Intent(WelcomeActivity.this, SelectDocumentActivity.class);
+            Intent i = new Intent(WelcomeActivity.this, SelectDocumentActivityKt.class);
             startActivity(i);
         });
 
